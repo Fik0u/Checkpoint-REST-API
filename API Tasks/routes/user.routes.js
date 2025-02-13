@@ -1,6 +1,7 @@
 const express = require("express")
+
+//Require of the routes
 const { addUser, fullList, findUser, updateUser, deleteUser } = require("../controllers/user.controllers")
-// const User = require("../models/User")
 
 const router = express.Router()
 
@@ -9,6 +10,7 @@ router.get('/test', (req , res) => {
     res.json('This is a test for my first route !')
 } )
 
+// With POSTMAN
 router.post('/addUser', addUser);
 router.get('/all', fullList);
 router.get('/:id', findUser);

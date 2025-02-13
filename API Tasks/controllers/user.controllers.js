@@ -1,5 +1,7 @@
 const User = require("../models/User")
 
+//! CRUD OPERATIONS:
+// I - POST Method (CREATE)
 exports.addUser = async(req, res) =>{
     try {
         const {Name, Email, Adress, Phone} = req.body
@@ -11,6 +13,7 @@ exports.addUser = async(req, res) =>{
     }
 }
 
+// II.1 - GET Method (READ All)
 exports.fullList = async(req, res) => {
     try {
         const listUsers = await User.find()
@@ -20,6 +23,7 @@ exports.fullList = async(req, res) => {
     }
 }
 
+// II.2 - GET Method (READ One)
 exports.findUser = async(req, res) => {
     try {
         const {id} = req.params
@@ -30,6 +34,7 @@ exports.findUser = async(req, res) => {
     }
 }
 
+// III - PUT Method (UPDATE)
 exports.updateUser = async(req, res) => {
     try {
         const {id} = req.params
@@ -40,10 +45,14 @@ exports.updateUser = async(req, res) => {
     }
 }
 
+// IV - DELETE Method (DELETE)
 exports.deleteUser = async(req, res) => {
     try {
         const {id} = req.params
         const userDeleted = await User.findByIdAndDelete(id)
+        if(!userDeleted){    // Optimise the response
+            return res.status(404).json("Couldn't find the user with ID")}
+
         res.status(200).json({msg: "User with ID deleted successfully", userDeleted})
     } catch (error) {
         res.status(400).json(error)
